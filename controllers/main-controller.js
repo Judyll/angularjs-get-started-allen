@@ -2,14 +2,12 @@
  * Create an IIFE (Immediately Invoked Function Expression) so that we don't need to declare a global variable
  */
 (function () {
-  var mainController = function (
-    $scope,
-    $interval,
-    $location
-  ) {
-    var countDownInterval = null;
+  var mainController = function ($scope, $interval, $location) {
+    $scope.username = "Angular";
+    $scope.countDown = 5;
+    $scope.searchLabel = "Auto-searching in " + $scope.countDown;
     $scope.search = function (username) {
-      cancelCountDown();
+      $scope.cancelCountDown();
       /**
        * We are letting $location service to move us to another URL which is the /user path
        * passing the username as the parameter in the URL. This how it is defined in our
@@ -17,9 +15,18 @@
        */
       $location.path("/user/" + username);
     };
-    $scope.onSearchInputClick = function () {
-      cancelCountDown();
+    $scope.cancelCountDown = function () {
+      if (countDownInterval) {
+        /**
+         * Cancel the timer
+         */
+        $interval.cancel(countDownInterval);
+        $scope.countDown = null;
+        $scope.searchLabel = "Search";
+      }
     };
+
+    var countDownInterval = null;
     var startCountDown = function () {
       /**
        * var doWork = function(){...}
@@ -40,20 +47,7 @@
         $scope.countDown
       );
     };
-    var cancelCountDown = function() {
-      if (countDownInterval) {
-        /**
-         * Cancel the timer
-         */
-        $interval.cancel(countDownInterval);
-        $scope.countDown = null;
-        $scope.searchLabel = "Search";
-      }
-    }
 
-    $scope.username = "Angular";
-    $scope.countDown = 5;
-    $scope.searchLabel = "Auto-searching in " + $scope.countDown;
     startCountDown();
   };
 

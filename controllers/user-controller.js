@@ -43,6 +43,9 @@
     );    
   };
 
+  /**
+   * Registering the controller to the module.
+   */
   var app = angular.module("GitHubViewer");
   app.controller("UserController", userController);
 })();
