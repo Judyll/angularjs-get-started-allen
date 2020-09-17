@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <link rel="stylesheet" href="lib/style.css" />
+    <script
+      data-require="angular.js@1.4.3"
+      data-semver="1.4.3"
+      src="https://code.angularjs.org/1.4.3/angular.js"
+    ></script>
+    <script src="lib/github-controller.js"></script>
+    <!--
+      This should be define after script.js because script.js contains the 
+      module for the application.
+    -->
+    <script src="lib/github-service.js"></script>
+  </head>
+
+  <body ng-app="GitHubViewer" ng-cloak>
+    <div ng-controller="GitHubController">
+      <div>{{error}}</div>
+      <!--
+        Since we are implementing the required attribute in our input type="search", then we cannot use ng-click directive on our input type="submit". What we can do is use the ng-submit on our form
+      -->
+      {{ countDown }}
+      <form name="searchUser" ng-submit="search(username)">
+        <!--
+          As the user types into the input, ng-model will push the value into
+          our $scope object as a "username" property
+        -->
+        <input
+          type="search"
+          placeholder="Username to find"
+          ng-model="username"
+          required
+        />
+        <!-- <input type="submit" value="Search" ng-click="search(username)">
+         -->
+        <input type="submit" value="Search" />
+      </form>
+      <!--
+        We are using single quote to tell Angular that to evaluate the property value as string literal instead of a $scope property
+        ng-show/ng-hide tells Angular to either show/hide the element block based on the javascript truthiness. On page load, user is equal to undefined which is falsy in javascript.
+      -->
+      <div ng-include="'userdetails.html'" ng-show="user"></div>
+    </div>
+  </body>
+</html>

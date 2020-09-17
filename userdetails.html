@@ -1,0 +1,51 @@
+<div id="div-user-details">
+  <h2>Name: {{user.name}}</h2>
+  <!--
+    If we are using src, this will return a console error 404 since the browser renders it as src equals {{person.imageSrc}}. It is later that Angular replaces the bindings. That is why we will use ng-src. 
+  -->
+  <img
+    ng-src="{{user.avatar_url}}"
+    title="{{user.name}}"
+    style="width: 200px; height: 200px"
+  />
+  <div>
+    Order:
+    <select ng-model="repoSortOrder">
+      <option value="+name">Asc By Name</option>
+      <option value="-stargazers_count">Desc By Stars</option>
+      <option value="+language">Asc By Language</option>
+    </select>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Stars</th>
+        <th>Language</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!--
+        We are now ordering our collection by the property named 'stargazers_count'. We are using single quote since it's a property in the 'repos' and not a property in our $scope. To order by descending, we can use '-stargazers_count'
+
+        <tr ng-repeat="repo in repos | orderBy:'-stargazers_count'">
+
+          We can use a sort order property that is coming from the $scope 
+
+          <tr ng-repeat="repo in repos | orderBy:repoSortOrder">
+
+            and in the scope will be 
+            
+            $scope.repoSortOrder="-stargazers_count" 
+      -->
+      <tr ng-repeat="repo in repos | orderBy:repoSortOrder">
+        <td>{{repo.name}}</td>
+        <!--
+          We are adding filters by piping the model value through the pre-defined filter angular has out of the box. If we want to have a numeric value after a decimal point, we can use number:1 which gives us x,xxx.x format.
+        -->
+        <td>{{repo.stargazers_count | number}}</td>
+        <td>{{repo.language}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
