@@ -9,13 +9,17 @@
      * When you are using routing, the service $routeParams is available and it will give you
      * any parameters that is defined in the url
      */
-    $routeParams
+    $routeParams,
+    $location
   ) {
     /**
      * We are getting parameter "username" from the routing URL /user/:username which we
      * define in the app.js
      */
     $scope.username = $routeParams.username;
+    $scope.navToRepo = function(repoName) {
+      $location.path("/user/" + $scope.username + "/" + repoName);
+    }
     gitHubService.getUser($scope.username).then(
       (usersRes) => {
         $scope.user = usersRes;

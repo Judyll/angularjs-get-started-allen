@@ -5,7 +5,7 @@
   /**
    * We are now creating our gitHub service and we are using the revealing design pattern where were a function can return an api. What we are going to return is a the public API.
    */
-   var gitHub = function ($http) {
+  var gitHub = function ($http) {
     var getUser = function (userName) {
       return $http
         .get("https://api.github.com/users/" + userName)
@@ -16,11 +16,24 @@
           return response.data;
         });
     };
-
     var getRepos = function (user) {
       return $http.get(user.repos_url).then((response) => {
         return response.data;
       });
+    };
+    var getRepoContributors = function (userName, repoName) {      
+      var repo;
+      var repoUrl = "https://api.github.com/repos/" + userName + "/" + repoName;
+      return $http.get(repoUrl)
+        .then((response) => {
+          repo = response.data;
+          return $http.get(repoUrl + "/contributors")
+        })
+        // Process the second returned promise
+        .then((response) => {
+          repo.contributors = response.data;
+          return repo;
+        });
     };
 
     /**
@@ -29,6 +42,7 @@
     return {
       getUser: getUser,
       getRepos: getRepos,
+      getRepoContributors: getRepoContributors
     };
   };
 

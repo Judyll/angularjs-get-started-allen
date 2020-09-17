@@ -23,6 +23,10 @@
         templateUrl: "views/user.html",
         controller: "UserController"
       })
+      .when("/user/:username/:reponame", {
+        templateUrl: "views/repo.html",
+        controller: "RepoController"
+      })
       /**
        * If you see a URL that you don't understand or is not define
        */
