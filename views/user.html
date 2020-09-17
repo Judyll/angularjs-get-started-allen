@@ -1,5 +1,15 @@
-<div id="div-user-details">
+<!--
+  <div id="div-user-details">
+
+  We are now removing the id since we no longer need to scroll to it
+  when being called on user-controller.js 
+
+  $location.hash("div-user-details");
+-->
+<div>
+  <a href="#/main">Back to search</a>
   <h2>Name: {{user.name}}</h2>
+  {{ error }}
   <!--
     If we are using src, this will return a console error 404 since the browser renders it as src equals {{person.imageSrc}}. It is later that Angular replaces the bindings. That is why we will use ng-src. 
   -->

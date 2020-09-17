@@ -5,7 +5,7 @@
   /**
    * We are now creating our gitHub service and we are using the revealing design pattern where were a function can return an api. What we are going to return is a the public API.
    */
-  var gitHub = function ($http) {
+   var gitHub = function ($http) {
     var getUser = function (userName) {
       return $http
         .get("https://api.github.com/users/" + userName)

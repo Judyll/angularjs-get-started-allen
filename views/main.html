@@ -1,0 +1,43 @@
+<!--
+    We are removing
+
+    <div ng-controller="GitHubController">
+
+    since we are now specifying what controller to use in the routing rules
+    as configured in the app.js
+
+    .where("/main", {
+        templateUrl: "main.html",
+        controller: "GitHubController",
+      })
+-->
+<div>
+  <!--
+        Since we are implementing the required attribute in our input type="search", then we cannot use ng-click directive on our input type="submit". What we can do is use the ng-submit on our form
+    -->
+  <form name="searchUser" ng-submit="search(username)">
+    <!--
+        As the user types into the input, ng-model will push the value into
+        our $scope object as a "username" property
+    -->
+    <input
+      type="search"
+      placeholder="Username to find"
+      ng-model="username"
+      ng-click="onSearchInputClick()"
+      required
+    />
+    <!-- 
+        <input type="submit" value="Search" ng-click="search(username)">
+    -->
+    <input type="submit" value="{{searchLabel}}" ng-disabled="countDown != null" />
+  </form>
+  <!--
+        We are using single quote to tell Angular that to evaluate the property value as string literal instead of a $scope property
+        ng-show/ng-hide tells Angular to either show/hide the element block based on the javascript truthiness. On page load, user is equal to undefined which is falsy in javascript.
+    
+    <div ng-include="'userdetails.html'" ng-show="user"></div>
+
+    userdetails.html is now renamed as user.html
+  -->
+</div>
